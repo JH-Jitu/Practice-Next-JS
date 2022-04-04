@@ -4,9 +4,10 @@ import Link from "next/link";
 import { Container, Post, Posts } from "../../modules/Container.styles";
 import UseFetchingHook from "../../modules/Hooks/UseFetchingHook";
 
-const posts = () => {
+const posts = (props) => {
   const { data, error } = UseFetchingHook(
-    "https://jsonplaceholder.typicode.com/posts"
+    "https://jsonplaceholder.typicode.com/posts",
+    props
   );
 
   return (
@@ -31,3 +32,14 @@ const posts = () => {
 };
 
 export default posts;
+
+export async function getStaticProps(context) {
+  const posts = await (
+    await fetch("https://jsonplaceholder.typicode.com/posts")
+  ).json();
+  return {
+    props: {
+      posts,
+    }, // will be passed to the page component as props
+  };
+}
