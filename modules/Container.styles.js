@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   margin: auto 30px;
+  padding: 0;
 `;
 
 export const CenteredComponent = styled.div`
@@ -23,4 +24,29 @@ export const Posts = styled.div`
 `;
 export const Post = styled.div`
   grid-column: span 6;
+`;
+
+export const BackgroundWave = styled.div`
+  background-image: url(${(props) => props.bgPhoto.src});
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 200vh;
+  width: 100%;
+  background-size: contain;
+
+  & div {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & section {
+      width: 500px;
+      text-align: center;
+
+      & h1 {
+        font-size: 40px;
+      }
+    }
+  }
 `;
