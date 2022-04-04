@@ -2,12 +2,11 @@ import React from "react";
 import useSWR from "swr";
 import Link from "next/link";
 import { Container, Post, Posts } from "../../modules/Container.styles";
+import UseFetchingHook from "../../modules/Hooks/UseFetchingHook";
 
 const posts = () => {
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const { data, error } = useSWR(
-    "https://jsonplaceholder.typicode.com/posts",
-    fetcher
+  const { data, error } = UseFetchingHook(
+    "https://jsonplaceholder.typicode.com/posts"
   );
 
   return (

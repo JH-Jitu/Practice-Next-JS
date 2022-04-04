@@ -1,30 +1,25 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import useSWR from "swr";
+import UseFetchingHook from "../../modules/Hooks/UseFetchingHook";
 
 const SinglePost = () => {
   const router = useRouter();
   const { singlePost } = router.query;
 
-  const fetcher = (...args) => fetch(...args).then((res) => res.json());
-
-  //   const { data, error } = useSWR(
-  //     `https://jsonplaceholder.typicode.com/comments?postId=${singlePost}`,
-  //     fetcher
-  //   );
-
-  const { data, error } = useSWR(
-    `https://jsonplaceholder.typicode.com/posts/${singlePost && singlePost}`,
-    fetcher
+  const { data, error } = UseFetchingHook(
+    `https://jsonplaceholder.typicode.com/comments?postId=${singlePost}`
   );
-  console.log(singlePost);
 
-  console.log(data);
+  const { data: postData, error: postError } = UseFetchingHook(
+    `https://jsonplaceholder.typicode.com/posts/${singlePost}`
+  );
 
   return (
     <div>
-      <h5>{data?.body}</h5>
-      {/* <ul>
+      <h5>{postData?.body}</h5>
+      <ul>
         {data?.map((comment) => {
           return (
             <li key={comment.id}>
@@ -33,7 +28,13 @@ const SinglePost = () => {
             </li>
           );
         })}
-      </ul> */}
+      </ul>
+
+      <button>
+        <Link passHref href="/">
+          Go back to home
+        </Link>
+      </button>
     </div>
   );
 };
